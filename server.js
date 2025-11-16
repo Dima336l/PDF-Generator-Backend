@@ -3,7 +3,8 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
-const { generatePDF } = require('../pdf-generator');
+// Use local copy inside backend folder for Render deploys
+const { generatePDF } = require('./pdf-generator');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
