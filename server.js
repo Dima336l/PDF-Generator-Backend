@@ -59,9 +59,15 @@ app.post('/generate', async (req, res) => {
     if (logo_base64) {
       logoPath = await writeBase64Image(logo_base64, 'logo');
       tempFiles.push(logoPath);
+      console.log('Logo received from frontend, saved to:', logoPath);
     } else {
-      const defaultLogo = path.join(__dirname, '..', 'logo.png');
-      if (fs.existsSync(defaultLogo)) logoPath = defaultLogo;
+      const defaultLogo = path.join(__dirname, 'logo.png');
+      if (fs.existsSync(defaultLogo)) {
+        logoPath = defaultLogo;
+        console.log('Using default logo from:', defaultLogo);
+      } else {
+        console.warn('No logo_base64 provided and default logo not found at:', defaultLogo);
+      }
     }
 
     // Output PDF path
