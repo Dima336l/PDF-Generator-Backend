@@ -9,8 +9,14 @@ try {
     calculateInvestment = calcLogic.calculateInvestment;
     parseCurrencyCalc = calcLogic.parseCurrency;
     formatCurrencyCalc = calcLogic.formatCurrency;
+    console.log('✓ Calculator logic loaded successfully');
+    console.log('  - calculateInvestment:', typeof calculateInvestment);
+    console.log('  - parseCurrency:', typeof parseCurrencyCalc);
+    console.log('  - formatCurrency:', typeof formatCurrencyCalc);
 } catch (e) {
-    console.warn('Calculator logic not found, using fallback functions:', e.message);
+    console.error('✗ Calculator logic not found, using fallback functions');
+    console.error('  Error:', e.message);
+    console.error('  Stack:', e.stack);
     parseCurrencyCalc = parseCurrency;
     formatCurrencyCalc = formatCurrency;
     calculateInvestment = null;
@@ -247,12 +253,17 @@ function calculateCalculatorValues(calculatorType, calcData, allData) {
         console.log(`calculateCalculatorValues - calling calculateInvestment with type: ${calculatorType}`);
         
         try {
+            console.log(`calculateCalculatorValues - dataForCalc keys:`, Object.keys(dataForCalc));
+            console.log(`calculateCalculatorValues - dataForCalc.calculator_type:`, dataForCalc.calculator_type);
             const calcResults = calculateInvestment(dataForCalc);
+            console.log(`calculateCalculatorValues - calcResults keys:`, Object.keys(calcResults));
             console.log(`calculateCalculatorValues - calcResults:`, {
                 purchasePrice: calcResults.purchasePrice,
                 monthlyRent: calcResults.monthlyRent,
+                annualRent: calcResults.annualRent,
                 annualProfit: calcResults.annualProfit,
-                roi: calcResults.roi
+                roi: calcResults.roi,
+                totalInvestment: calcResults.totalInvestment || calcResults.netInvestment
             });
             
             // Extract results (works for all calculator types)
